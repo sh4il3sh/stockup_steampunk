@@ -1,0 +1,81 @@
+managed implementation in class zbp_r_stock_upl unique;
+strict ( 2 );
+with draft;
+define behavior for ZR_STOCK_UPL alias StockUpload
+persistent table ztab_stock_upl
+draft table zztstock_upl_d
+early numbering
+lock master total etag LastChangedAt
+authorization master ( instance )
+etag master LocalLastChangedAt
+{
+  create;
+  update;
+  delete;
+
+  field ( readonly ) RecordCounter;
+// We don't want users manually typing a record number
+//field ( readonly, numbering : managed ) RecordCounter;
+
+// Administrative fields should only be managed by the system
+  field ( readonly ) LocalCreatedAt, LocalCreatedBy, LocalLastChangedAt, LocalLastChangedBy, LastChangedAt;
+
+  // This is to create a popup window for excel upload. It is a 'static' action because it doesn't operate on a specific row, but rather on the overall process of uploading.
+  static action UploadExcel deep parameter Z_S_ExcelUpload; // result [1] $self;
+
+  // These are like Radio Buttons.
+  // We define them as 'instance' actions because we select a row and then click the button.
+
+  action CheckData result [1] $self;     // Covers Buttons 2 & 3 (Check/Recheck)
+  action ProcessMM result [1] $self;     // Covers Buttons 4 & 5 (Process/Reprocess MM)
+  action ProcessWM result [1] $self;     // Covers Buttons 6 & 7 (Process/Reprocess WM)
+
+  // Standard Draft actions (Required when 'with draft' is used)
+  draft action Edit;
+  draft action Activate optimized;
+  draft action Discard;
+  draft action Resume;
+  draft determine action Prepare;
+
+// This maps our nice CDS names back to your physical Z-table columns
+mapping for ztab_stock_upl
+  {
+    RecordCounter = recnr;
+    Status = status;
+    Material = matnr;
+    Quantity = anfme;
+    StockCategory = bestq;
+//    WBSInternal = pspnr;
+//    WBSDisplay = posid;
+    WMRelativeInd = wm_rel_ind;
+    StorageType = nltyp;
+    StorageBin = nlpla;
+    StoragePosition = nppos;
+    PostingDate = budat;
+    MaterialDoc = mblnr;
+    TransferOrder = tanum;
+    Message = message;
+    Plant = werks;
+    StorageLocation = lgort;
+    MaterialC = matnr_c;
+    OldMaterialNum = bismt;
+    QuantityC = anfme_c;
+    BaseUnit = altme;
+    Batch = charg;
+    StorageUnitType = letyp;
+    StorageUnitNumber = lenum;
+    VerificationValue = verif;
+    SpecialStockInd = sobkz;
+    WBSElement = wbs_elem;
+    LabColliNumber = nr_colli_lab;
+    MovementType = bwart;
+    WMMovementType = bwlvs;
+    ValuationType = bwtar;
+    UploadFileName = uplfile;
+    LocalCreatedAt = local_created_at;
+    LocalCreatedBy = local_created_by;
+    LocalLastChangedAt = local_last_changed_at;
+    LocalLastChangedBy = local_last_changed_by;
+    LastChangedAt = last_changed_at;
+  }
+}

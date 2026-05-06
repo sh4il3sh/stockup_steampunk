@@ -1,0 +1,4 @@
+@EndUserText.label: 'Service Definition for Stock Upload'
+define service ZUI_STOCK_UPL_V4 {
+  expose ZC_STOCK_UPL as StockUpload;
+}

@@ -1,0 +1,6 @@
+abstract;
+strict;
+with hierarchy;
+define behavior for Z_S_ExcelUpload //alias <alias_name>
+{
+}

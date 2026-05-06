@@ -1,0 +1,47 @@
+@Metadata.layer: #CORE
+@UI: {
+  headerInfo: { typeName: 'Stock Upload', 
+                typeNamePlural: 'Stock Uploads', 
+                title: { type: #STANDARD, value: 'RecordCounter' } }
+}
+annotate view ZC_STOCK_UPL with
+{
+  @UI.facet: [ { id: 'idIdentification',
+                 type: #IDENTIFICATION_REFERENCE,
+                 label: 'Stock Details',
+                 position: 10 } ]
+
+//    @UI: { lineItem:       [ { position: 10 } ],
+//         identification: [ { position: 10 } ] }
+    
+  @UI: { lineItem: [ { position: 10 },
+                     { type: #FOR_ACTION, dataAction: 'UploadExcel', label: 'Upload Excel' },
+                     { type: #FOR_ACTION, dataAction: 'CheckData', label: 'Check Data' },
+                     { type: #FOR_ACTION, dataAction: 'ProcessMM', label: 'Process MM' },
+                     { type: #FOR_ACTION, dataAction: 'ProcessWM', label: 'Process WM' }
+                   ],
+         selectionField: [ { position: 10 } ] }
+  RecordCounter;
+
+  @UI: { lineItem:       [ { position: 20 } ],
+         identification: [ { position: 20 } ],
+         selectionField: [ { position: 20 } ] }
+  Status;
+
+  @UI: { lineItem:       [ { position: 30 } ],
+         identification: [ { position: 30 } ],
+         selectionField: [ { position: 30 } ] }
+  Material;
+
+  @UI: { lineItem:       [ { position: 40 } ],
+         identification: [ { position: 40 } ] }
+  Quantity;
+
+  @UI: { lineItem:       [ { position: 50 } ],
+         identification: [ { position: 50 } ] }
+  Plant;
+
+  @UI: { lineItem:       [ { position: 60 } ],
+         identification: [ { position: 60 } ] }
+  StorageLocation;
+}

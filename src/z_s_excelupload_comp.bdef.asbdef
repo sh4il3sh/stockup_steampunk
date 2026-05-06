@@ -1,0 +1,7 @@
+abstract;
+strict;
+with hierarchy;
+define behavior for Z_S_ExcelUpload_comp //alias <alias_name>
+{
+association _StreamProperties with hierarchy;
+}
